@@ -13,8 +13,9 @@
   input{width:100%;box-sizing:border-box;font-size:15px;padding:10px 12px;border:1px solid #ccc;border-radius:7px;margin-bottom:16px;}
   input:focus{outline:none;border-color:#888;}
   .hint{font-size:12px;color:#888;margin:-12px 0 16px;}
+  .opt{font-size:13px;font-weight:bold;color:#444;margin:0 0 10px;}
   .preview{border:1px dashed #cfcfcf;border-radius:8px;padding:22px;background:#fff;overflow-x:auto;}
-  .btn{display:inline-block;background:#1a1a1a;color:#fff;border:0;border-radius:8px;font-size:15px;font-weight:bold;padding:12px 22px;cursor:pointer;}
+  .btn{display:inline-block;background:#1a1a1a;color:#fff;border:0;border-radius:8px;font-size:14px;font-weight:bold;padding:11px 20px;cursor:pointer;margin-top:16px;}
   .btn:active{transform:scale(.99);}
   .steps{font-size:13px;color:#555;line-height:1.6;}
   code{background:#f0f0f0;padding:1px 5px;border-radius:4px;font-size:12px;}
@@ -22,7 +23,7 @@
 </style></head>
 <body><div class="wrap">
 <h1>Lusive email signature</h1>
-<p class="sub">Fill in your details, copy, and paste into Gmail. Everyone shares the same animated logo and layout.</p>
+<p class="sub">Fill in your details, then pick the logo you like and copy that signature into Gmail.</p>
 <div class="card">
   <label for="f_name">Full name</label>
   <input id="f_name" type="text" placeholder="Miles Marcum" autocomplete="name">
@@ -33,16 +34,25 @@
   <label for="f_phone">Phone</label>
   <input id="f_phone" type="tel" placeholder="(818) 555-1234" autocomplete="tel">
   <div class="hint">Type it however you want it to read. The click-to-call link is built automatically.</div>
-  <div class="fixed">Shared for everyone (not editable here): the Lusive logo, &ldquo;LUSIVE&rdquo;, lusive.ai, and the LinkedIn company page.</div>
+  <div class="fixed">Shared for everyone (not editable here): &ldquo;LUSIVE&rdquo;, lusive.ai, and the LinkedIn company page.</div>
 </div>
+
 <div class="card">
-  <label style="margin-bottom:12px;">Live preview</label>
-  <div id="preview" class="preview"></div>
-  <div style="margin-top:18px;"><button id="copybtn" class="btn" onclick="copySig()">Copy signature</button></div>
+  <div class="opt">Option 1 &mdash; Original logo</div>
+  <div id="preview1" class="preview"></div>
+  <button id="btn1" class="btn" onclick="copySig('preview1','btn1')">Copy this signature</button>
 </div>
+
+<div class="card">
+  <div class="opt">Option 2 &mdash; New logo</div>
+  <div id="preview2" class="preview"></div>
+  <button id="btn2" class="btn" onclick="copySig('preview2','btn2')">Copy this signature</button>
+</div>
+
 <div class="card steps">
   <strong>Then, in Gmail:</strong>
   <ol style="margin:8px 0 0;padding-left:20px;">
+    <li>Pick the option you want above and click its <code>Copy this signature</code>.</li>
     <li>Gmail &rarr; gear &rarr; <code>See all settings</code> &rarr; <code>General</code> tab.</li>
     <li>Scroll to <code>Signature</code>, click into the box, paste.</li>
     <li>Set it as default for new emails / replies if you want, then <code>Save Changes</code>.</li>
@@ -51,13 +61,13 @@
 </div>
 </div>
 <script>
-var LOGO="https://cytor10.github.io/lusive-sig/lusive_sig_3x_225.gif", LINKEDIN="https://www.linkedin.com/company/lusive-ai/";
+var LOGO1="https://cytor10.github.io/lusive-sig/lusive_sig_3x_225.gif", LOGO2="https://cytor10.github.io/lusive-sig/lusive_sig_v2_3x_225.gif", LINKEDIN="https://www.linkedin.com/company/lusive-ai/";
 function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function telFrom(p){var d=(p||"").replace(/[^0-9]/g,"");if(d.length===10)d="1"+d;return d?("+"+d):"";}
-function buildSig(name,title,email,phoneDisp,tel){
+function buildSig(logo,name,title,email,phoneDisp,tel){
 return '<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;font-family:Arial,Helvetica,sans-serif;">'
 +'<tr>'
-+'<td valign="top" style="padding:0;line-height:0;font-size:0;"><a href="https://lusive.ai" target="_blank" style="text-decoration:none;outline:none;"><img src="'+LOGO+'" width="75" height="75" alt="Lusive" style="display:block;width:75px;height:75px;border:0;outline:none;text-decoration:none;"></a></td>'
++'<td valign="top" style="padding:0;line-height:0;font-size:0;"><a href="https://lusive.ai" target="_blank" style="text-decoration:none;outline:none;"><img src="'+logo+'" width="75" height="75" alt="Lusive" style="display:block;width:75px;height:75px;border:0;outline:none;text-decoration:none;"></a></td>'
 +'<td valign="top" style="padding:0 16px;"><div style="width:1px;height:75px;background-color:#cccccc;font-size:1px;line-height:1px;">&nbsp;</div></td>'
 +'<td valign="top" style="padding:0;font-family:Arial,Helvetica,sans-serif;">'
 +'<div style="font-size:16px;font-weight:bold;color:#1a1a1a;line-height:20px;">'+name+'</div>'
@@ -66,25 +76,28 @@ return '<table cellpadding="0" cellspacing="0" border="0" role="presentation" st
 +'<div style="font-size:12px;line-height:18px;padding-top:4px;color:#555555;"><a href="mailto:'+email+'" style="color:#555555;text-decoration:none;">'+email+'</a><span style="color:#aaaaaa;">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="tel:'+tel+'" style="color:#555555;text-decoration:none;">'+phoneDisp+'</a><span style="color:#aaaaaa;">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="https://lusive.ai" target="_blank" style="color:#555555;text-decoration:none;">lusive.ai</a><span style="color:#aaaaaa;">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="'+LINKEDIN+'" target="_blank" style="color:#555555;text-decoration:none;">LinkedIn</a></div>'
 +'</td></tr></table>';
 }
-function render(){
+function vals(){
   var name=esc(document.getElementById("f_name").value)||"Your Name";
   var title=esc(document.getElementById("f_title").value)||"Your Title";
   var email=esc(document.getElementById("f_email").value)||"you@lusive.ai";
   var praw=document.getElementById("f_phone").value;
-  var pdisp=esc(praw)||"(000) 000-0000";
-  var tel=telFrom(praw);
-  document.getElementById("preview").innerHTML=buildSig(name,title,email,pdisp,tel);
+  return {name:name,title:title,email:email,pdisp:esc(praw)||"(000) 000-0000",tel:telFrom(praw)};
+}
+function render(){
+  var v=vals();
+  document.getElementById("preview1").innerHTML=buildSig(LOGO1,v.name,v.title,v.email,v.pdisp,v.tel);
+  document.getElementById("preview2").innerHTML=buildSig(LOGO2,v.name,v.title,v.email,v.pdisp,v.tel);
 }
 ["f_name","f_title","f_email","f_phone"].forEach(function(id){document.getElementById(id).addEventListener("input",render);});
-function copySig(){
-  var el=document.getElementById("preview");
+function copySig(previewId,btnId){
+  var el=document.getElementById(previewId);
   var range=document.createRange();range.selectNodeContents(el);
   var sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);
   var ok=false;try{ok=document.execCommand("copy");}catch(e){}
   sel.removeAllRanges();
-  var b=document.getElementById("copybtn");
+  var b=document.getElementById(btnId);
   b.textContent=ok?"Copied!":"Select the preview and press Ctrl/Cmd+C";
-  setTimeout(function(){b.textContent="Copy signature";},2200);
+  setTimeout(function(){b.textContent="Copy this signature";},2200);
 }
 render();
 </script>
