@@ -34,21 +34,18 @@
   <label for="f_phone">Phone</label>
   <input id="f_phone" type="tel" placeholder="(818) 555-1234" autocomplete="tel">
   <div class="hint">Type it however you want it to read. The click-to-call link is built automatically.</div>
-  <div class="fixed">Shared for everyone (not editable here): &ldquo;LUSIVE&rdquo;, lusive.ai, and the LinkedIn company page.</div>
+  <div class="fixed">Shared for everyone (not editable here): &ldquo;LUSIVE&rdquo;, lusive.ai, the LinkedIn company page, and the office address.</div>
 </div>
-
 <div class="card">
   <div class="opt">Option 1 &mdash; Original logo</div>
   <div id="preview1" class="preview"></div>
   <button id="btn1" class="btn" onclick="copySig('preview1','btn1')">Copy this signature</button>
 </div>
-
 <div class="card">
   <div class="opt">Option 2 &mdash; New logo</div>
   <div id="preview2" class="preview"></div>
   <button id="btn2" class="btn" onclick="copySig('preview2','btn2')">Copy this signature</button>
 </div>
-
 <div class="card steps">
   <strong>Then, in Gmail:</strong>
   <ol style="margin:8px 0 0;padding-left:20px;">
@@ -61,19 +58,20 @@
 </div>
 </div>
 <script>
-var LOGO1="https://cytor10.github.io/lusive-sig/lusive_sig_3x_225.gif", LOGO2="https://cytor10.github.io/lusive-sig/lusive_sig_v2_3x_225.gif", LINKEDIN="https://www.linkedin.com/company/lusive-ai/";
+var LOGO1="https://cytor10.github.io/lusive-sig/lusive_sig_3x_225.gif", LOGO2="https://cytor10.github.io/lusive-sig/lusive_sig_v2_3x_225.gif", LINKEDIN="https://www.linkedin.com/company/lusive-ai/", ADDRESS="2373 Teller Rd, Newbury Park, CA 91320, United States";
 function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function telFrom(p){var d=(p||"").replace(/[^0-9]/g,"");if(d.length===10)d="1"+d;return d?("+"+d):"";}
 function buildSig(logo,name,title,email,phoneDisp,tel){
 return '<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;font-family:Arial,Helvetica,sans-serif;">'
 +'<tr>'
 +'<td valign="top" style="padding:0;line-height:0;font-size:0;"><a href="https://lusive.ai" target="_blank" style="text-decoration:none;outline:none;"><img src="'+logo+'" width="75" height="75" alt="Lusive" style="display:block;width:75px;height:75px;border:0;outline:none;text-decoration:none;"></a></td>'
-+'<td valign="top" style="padding:0 16px;"><div style="width:1px;height:75px;background-color:#cccccc;font-size:1px;line-height:1px;">&nbsp;</div></td>'
++'<td valign="top" style="padding:0 16px;"><div style="width:1px;height:88px;background-color:#cccccc;font-size:1px;line-height:1px;">&nbsp;</div></td>'
 +'<td valign="top" style="padding:0;font-family:Arial,Helvetica,sans-serif;">'
 +'<div style="font-size:16px;font-weight:bold;color:#1a1a1a;line-height:20px;">'+name+'</div>'
 +'<div style="font-size:13px;color:#555555;line-height:18px;">'+title+'</div>'
 +'<div style="font-size:13px;font-weight:bold;letter-spacing:1.5px;color:#1a1a1a;line-height:20px;padding-top:2px;">LUSIVE</div>'
 +'<div style="font-size:12px;line-height:18px;padding-top:4px;color:#555555;"><a href="mailto:'+email+'" style="color:#555555;text-decoration:none;">'+email+'</a><span style="color:#aaaaaa;">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="tel:'+tel+'" style="color:#555555;text-decoration:none;">'+phoneDisp+'</a><span style="color:#aaaaaa;">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="https://lusive.ai" target="_blank" style="color:#555555;text-decoration:none;">lusive.ai</a><span style="color:#aaaaaa;">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="'+LINKEDIN+'" target="_blank" style="color:#555555;text-decoration:none;">LinkedIn</a></div>'
++'<div style="font-size:12px;line-height:16px;padding-top:3px;color:#888888;">'+ADDRESS+'</div>'
 +'</td></tr></table>';
 }
 function vals(){
